@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 0.1.9
+servers:
+  - url: http://67.207.85.220:3000
+    description: Optional server description, e.g. Main (production) server
+  - url: http://localhost:3000
+    description: Optional server description, e.g. Internal staging server for testing
+paths:
+  /users:
+    post:
+      description: cadastrar usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                senha:
+                  type: string
+              required:
+                - name
+                - email
+                - senha
+      responses:
+        200:
+          description: objeto usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: id do usuario.
+                  nome:
+                    type: string
+                    description: nome do usuario.
+                  email:
+                    type: string
+                    description: email do usuario.
+                  senha:
+                    type: string
+                    description: senha do usuario.
+                  token:
+                    type: string
+                    description: token do usuario.
+  /users/autenticar:
+    post:
+      description: autenticar usuarios gerando um token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                senha:
+                  type: string
+              required:
+                - email
+                - senha
+      responses:
+        200:
+          description: token do usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: token do usuario.
+  /users/isAutenticated:
+    post:
+      description: conferir token de usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+              required:
+                - token
+      responses:
+        200:
+          description: objeto usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: email do usuario.
+                  name:
+                    type: string
+                    description: nome do usuario.
+                  id:
+                    type: integer
+                    description: id do usuario.
+  /users/senha:
+    patch:
+      description: trocar senha de usuarios
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                senha:
+                  type: string
+                senhaNew:
+                  type: string
+                token:
+                  type: string
+              required:
+                - senha
+                - senhaNew
+                - token
